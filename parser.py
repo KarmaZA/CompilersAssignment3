@@ -5,6 +5,7 @@ import ply.yacc as yacc
 
 from lexer import tokens
 
+global bFlag
 bFlag = True
 
 
@@ -60,6 +61,6 @@ if __name__ == "__main__":
 
     result = parser.parse(str(data))
     if bFlag:
-        print("accepted")
+        print("Accepted")
     else:
         print("Error in input")

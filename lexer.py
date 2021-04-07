@@ -45,9 +45,9 @@ t_ignore = ' \t'
 def t_error(t):
     if __name__ == "__main__":
         print("Illegal character '%s'" % t.value[0])
-        t.lexer.skip(1)
     else:
         print("Error in Input")
+    t.lexer.skip(1)
 
 
 def map(data):
