@@ -6,6 +6,9 @@
 import ply.lex as lex
 import ply.yacc as yacc
 
+global lastEle
+lastEle = ""
+
 global bFlag
 bFlag = True
 # Lexer code
@@ -38,10 +41,11 @@ def t_newline(t):
 
 
 def t_error(t):
-    #print("Illegal character '%s'" % t.value[0])
+    # print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
     global bFlag
     bFlag = False
+
 
 lexer = lex.lex()
 
@@ -54,13 +58,20 @@ def p_expression_count(p):
     'expression : SYMBOL NUMBER expression'
     global count
     count += p[2]
-
+    global lastEle
+    lastEle = ""
 
 
 def p_expression_symbol(p):
     'expression : SYMBOL expression'
     global count
     count += 1
+    global lastEle
+    if lastEle == str(p[1]):
+        global bFlag
+        bFlag = False
+    else:
+        lastEle = str(p[1])
 
 
 def p_expression_symbcount(p):
@@ -76,6 +87,7 @@ def p_error(p):
 
 parser = yacc.yacc(debug=False)
 
+
 # has to be in a method or global count throws errors
 def run():
     global count
@@ -83,7 +95,7 @@ def run():
     dataOut = []
     dataIn = input()
     while dataIn != "#":
-        dataOut.append((dataIn))
+        dataOut.append(dataIn)
         dataIn = input()
 
     for inputs in dataOut:
