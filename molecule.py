@@ -4,20 +4,37 @@
 # Developing a lexer and parser for Molecules
 
 import ply.lex as lex
+import ply.yacc as yacc
+
+global bFlag
+bFlag = True
+# Lexer code
 
 tokens = [
     'SYMBOL',
     'NUMBER'
 ]
 
-t_NUMBER = r'[0-9_]'
-
 t_SYMBOL = (
-    r"A[lrsgutcm]|B[eraikh]?|C[laroudsemfn]?|D[ybs]|E[urs]|F[erml]?"
-    r"G[aed]|H[eofgs]?|I[nr]?|Kr?|L[iaurv]|M[gnodtc]|N[eiabdpob]?"
-    r"O[sg]?|P[drmtboau]?|R[buhenafg]|S[icernbmg]?|T[icebmalhs]"
-    r"U|V|W|Xe|Yb?|z[nr]"
+    r"A[lrsgutcm]|B[eraikh]?|C[laroudsemfn]?|D[ybs]|E[urs]|F[erml]?|"
+    r"G[aed]|H[eofgs]?|I[nr]?|Kr?|L[iaurv]|M[gnodtc]|N[eiabdpob]?|"
+    r"O[sg]?|P[drmtboau]?|R[buhenafg]|S[icernbmg]?|T[icebmalhs]|"
+    r"U|V|W|Xe|Yb?|Z[nr]"
 )
+
+
+def t_NUMBER(t):
+    r"\d+"
+    t.value = int(t.value)
+    return t
+
+
+t_ignore = ' \t'
+
+
+def t_newline(t):
+    r'\n+'
+    t.lexer.lineno += len(t.value)
 
 
 def t_error(t):
@@ -27,21 +44,40 @@ def t_error(t):
 
 lexer = lex.lex()
 
-if __name__ == "__main__":
-    check = input()
-    data = ""
-    while check.find("#") != 0:
-        data += check + "\n"
-        check = input()
-    lexer.input(data)
+# Parser Code
+#global count
+count = 0
 
-    while True:
-        tok = lexer.token()
-        if not tok:
-            break
-        mystr = str(tok)
-        if mystr.index("(") > 0:
-            mystr = mystr[mystr.index("("):]
-            mystr = mystr.replace(",", ", ")
-            mystr = mystr[0:1] + "'" + map(mystr[1:mystr.index(",")]) + "'" + mystr[mystr.index(","):]
-        print(mystr)
+
+def p_expression_count(p):
+    'expression : SYMBOL NUMBER expression'
+    global count
+    count += p[2]
+
+
+def p_expression_symbol(p):
+    'expression : SYMBOL expression'
+    global count
+    count += 1
+
+
+def p_expression_symbcount(p):
+    'expression : '
+    pass
+
+
+def p_error(p):
+    print("error in formula")
+    global bFlag
+    bFlag = False
+
+
+parser = yacc.yacc(debug=False)
+
+if __name__ == "__main__":
+    #global count
+    #global bFlag
+    dataOut = []
+    dataIn = ""
+    while dataIn != "#":
+        dataIn = input()
