@@ -49,7 +49,7 @@ def p_error(p):
     bFlag = False
 
 
-parser = yacc.yacc()
+parser = yacc.yacc(debug=False)
 
 if __name__ == "__main__":
     check = input()

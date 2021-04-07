@@ -10,8 +10,14 @@ tokens = [
     'NUMBER'
 ]
 
-t_SYMBOL = r'[A-Z][a-z]'
 t_NUMBER = r'[0-9_]'
+
+t_SYMBOL = (
+    r"A[lrsgutcm]|B[eraikh]?|C[laroudsemfn]?|D[ybs]|E[urs]|F[erml]?"
+    r"G[aed]|H[eofgs]?|I[nr]?|Kr?|L[iaurv]|M[gnodtc]|N[eiabdpob]?"
+    r"O[sg]?|P[drmtboau]?|R[buhenafg]|S[icernbmg]?|T[icebmalhs]"
+    r"U|V|W|Xe|Yb?|z[nr]"
+)
 
 
 def t_error(t):
