@@ -3,6 +3,8 @@
 # Developing a lexer for a simple adder that could be encountered in a programming language
 #
 import ply.lex as lex
+bf = True
+
 # List of token names
 tokens = [
     'NAME',
@@ -46,7 +48,9 @@ def t_error(t):
     if __name__ == "__main__":
         print("Illegal character '%s'" % t.value[0])
     else:
-        print("Error in Input")
+        #print("Error in Input")
+        global bf
+        bf = False
     t.lexer.skip(1)
 
 

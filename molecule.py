@@ -11,7 +11,7 @@ tokens = [
 ]
 
 t_SYMBOL = r'[A-Z][a-z]'
-t_NUMBER = r'[0-9]'
+t_NUMBER = r'[0-9_]'
 
 
 def t_error(t):

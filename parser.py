@@ -3,11 +3,10 @@
 
 import ply.yacc as yacc
 
-from lexer import tokens
+from lexer import tokens, bf
 
-global bFlag
 bFlag = True
-
+bFlag = bf
 
 def p_expression_plus(p):
     'expression : expression PLUS term'
@@ -46,6 +45,7 @@ def p_factor_name(p):
 
 def p_error(p):
     # print("Error in input")
+    global bFlag
     bFlag = False
 
 
