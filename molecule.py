@@ -45,7 +45,7 @@ def t_error(t):
 lexer = lex.lex()
 
 # Parser Code
-#global count
+# global count
 count = 0
 
 
@@ -74,10 +74,26 @@ def p_error(p):
 
 parser = yacc.yacc(debug=False)
 
-if __name__ == "__main__":
-    #global count
-    #global bFlag
+
+def run():
+    global count
+    global bFlag
     dataOut = []
     dataIn = ""
     while dataIn != "#":
         dataIn = input()
+        dataOut.append((dataIn))
+
+    for inputs in dataOut:
+        count = 0
+        parser.parse(inputs)
+
+        if bFlag:
+            print(count)
+        else:
+            print("Error in formula")
+        bFlag = False
+
+
+if __name__ == "__main__":
+    run()

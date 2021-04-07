@@ -2,188 +2,93 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Grammar
 
-Rule 0     S' -> expression
-Rule 1     expression -> expression PLUS term
-Rule 2     expression -> term
-Rule 3     term -> factor
-Rule 4     expression -> expression EQUALS term
-Rule 5     factor -> LPAREN expression RPAREN
-Rule 6     factor -> NUMBER
-Rule 7     factor -> NAME
+Rule 0     S' -> chemical_equation
+Rule 1     chemical_equation -> <empty>
+Rule 2     chemical_equation -> species_list
+Rule 3     species_list -> species_list species
+Rule 4     species_list -> species
+Rule 5     species -> SYMBOL
+Rule 6     species -> SYMBOL COUNT
 
 Terminals, with rules where they appear
 
-EQUALS               : 4
-LPAREN               : 5
-NAME                 : 7
-NUMBER               : 6
-PLUS                 : 1
-RPAREN               : 5
+COUNT                : 6
+SYMBOL               : 5 6
 error                : 
 
 Nonterminals, with rules where they appear
 
-expression           : 1 4 5 0
-factor               : 3
-term                 : 1 2 4
+chemical_equation    : 0
+species              : 3 4
+species_list         : 2 3
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . expression
-    (1) expression -> . expression PLUS term
-    (2) expression -> . term
-    (4) expression -> . expression EQUALS term
-    (3) term -> . factor
-    (5) factor -> . LPAREN expression RPAREN
-    (6) factor -> . NUMBER
-    (7) factor -> . NAME
+    (0) S' -> . chemical_equation
+    (1) chemical_equation -> .
+    (2) chemical_equation -> . species_list
+    (3) species_list -> . species_list species
+    (4) species_list -> . species
+    (5) species -> . SYMBOL
+    (6) species -> . SYMBOL COUNT
 
-    LPAREN          shift and go to state 4
-    NUMBER          shift and go to state 5
-    NAME            shift and go to state 6
+    $end            reduce using rule 1 (chemical_equation -> .)
+    SYMBOL          shift and go to state 4
 
-    expression                     shift and go to state 1
-    term                           shift and go to state 2
-    factor                         shift and go to state 3
+    chemical_equation              shift and go to state 1
+    species_list                   shift and go to state 2
+    species                        shift and go to state 3
 
 state 1
 
-    (0) S' -> expression .
-    (1) expression -> expression . PLUS term
-    (4) expression -> expression . EQUALS term
+    (0) S' -> chemical_equation .
 
-    PLUS            shift and go to state 7
-    EQUALS          shift and go to state 8
 
 
 state 2
 
-    (2) expression -> term .
+    (2) chemical_equation -> species_list .
+    (3) species_list -> species_list . species
+    (5) species -> . SYMBOL
+    (6) species -> . SYMBOL COUNT
 
-    PLUS            reduce using rule 2 (expression -> term .)
-    EQUALS          reduce using rule 2 (expression -> term .)
-    $end            reduce using rule 2 (expression -> term .)
-    RPAREN          reduce using rule 2 (expression -> term .)
+    $end            reduce using rule 2 (chemical_equation -> species_list .)
+    SYMBOL          shift and go to state 4
 
+    species                        shift and go to state 5
 
 state 3
 
-    (3) term -> factor .
+    (4) species_list -> species .
 
-    PLUS            reduce using rule 3 (term -> factor .)
-    EQUALS          reduce using rule 3 (term -> factor .)
-    $end            reduce using rule 3 (term -> factor .)
-    RPAREN          reduce using rule 3 (term -> factor .)
+    SYMBOL          reduce using rule 4 (species_list -> species .)
+    $end            reduce using rule 4 (species_list -> species .)
 
 
 state 4
 
-    (5) factor -> LPAREN . expression RPAREN
-    (1) expression -> . expression PLUS term
-    (2) expression -> . term
-    (4) expression -> . expression EQUALS term
-    (3) term -> . factor
-    (5) factor -> . LPAREN expression RPAREN
-    (6) factor -> . NUMBER
-    (7) factor -> . NAME
+    (5) species -> SYMBOL .
+    (6) species -> SYMBOL . COUNT
 
-    LPAREN          shift and go to state 4
-    NUMBER          shift and go to state 5
-    NAME            shift and go to state 6
+    SYMBOL          reduce using rule 5 (species -> SYMBOL .)
+    $end            reduce using rule 5 (species -> SYMBOL .)
+    COUNT           shift and go to state 6
 
-    expression                     shift and go to state 9
-    term                           shift and go to state 2
-    factor                         shift and go to state 3
 
 state 5
 
-    (6) factor -> NUMBER .
+    (3) species_list -> species_list species .
 
-    PLUS            reduce using rule 6 (factor -> NUMBER .)
-    EQUALS          reduce using rule 6 (factor -> NUMBER .)
-    $end            reduce using rule 6 (factor -> NUMBER .)
-    RPAREN          reduce using rule 6 (factor -> NUMBER .)
+    SYMBOL          reduce using rule 3 (species_list -> species_list species .)
+    $end            reduce using rule 3 (species_list -> species_list species .)
 
 
 state 6
 
-    (7) factor -> NAME .
+    (6) species -> SYMBOL COUNT .
 
-    PLUS            reduce using rule 7 (factor -> NAME .)
-    EQUALS          reduce using rule 7 (factor -> NAME .)
-    $end            reduce using rule 7 (factor -> NAME .)
-    RPAREN          reduce using rule 7 (factor -> NAME .)
-
-
-state 7
-
-    (1) expression -> expression PLUS . term
-    (3) term -> . factor
-    (5) factor -> . LPAREN expression RPAREN
-    (6) factor -> . NUMBER
-    (7) factor -> . NAME
-
-    LPAREN          shift and go to state 4
-    NUMBER          shift and go to state 5
-    NAME            shift and go to state 6
-
-    term                           shift and go to state 10
-    factor                         shift and go to state 3
-
-state 8
-
-    (4) expression -> expression EQUALS . term
-    (3) term -> . factor
-    (5) factor -> . LPAREN expression RPAREN
-    (6) factor -> . NUMBER
-    (7) factor -> . NAME
-
-    LPAREN          shift and go to state 4
-    NUMBER          shift and go to state 5
-    NAME            shift and go to state 6
-
-    term                           shift and go to state 11
-    factor                         shift and go to state 3
-
-state 9
-
-    (5) factor -> LPAREN expression . RPAREN
-    (1) expression -> expression . PLUS term
-    (4) expression -> expression . EQUALS term
-
-    RPAREN          shift and go to state 12
-    PLUS            shift and go to state 7
-    EQUALS          shift and go to state 8
-
-
-state 10
-
-    (1) expression -> expression PLUS term .
-
-    PLUS            reduce using rule 1 (expression -> expression PLUS term .)
-    EQUALS          reduce using rule 1 (expression -> expression PLUS term .)
-    $end            reduce using rule 1 (expression -> expression PLUS term .)
-    RPAREN          reduce using rule 1 (expression -> expression PLUS term .)
-
-
-state 11
-
-    (4) expression -> expression EQUALS term .
-
-    PLUS            reduce using rule 4 (expression -> expression EQUALS term .)
-    EQUALS          reduce using rule 4 (expression -> expression EQUALS term .)
-    $end            reduce using rule 4 (expression -> expression EQUALS term .)
-    RPAREN          reduce using rule 4 (expression -> expression EQUALS term .)
-
-
-state 12
-
-    (5) factor -> LPAREN expression RPAREN .
-
-    PLUS            reduce using rule 5 (factor -> LPAREN expression RPAREN .)
-    EQUALS          reduce using rule 5 (factor -> LPAREN expression RPAREN .)
-    $end            reduce using rule 5 (factor -> LPAREN expression RPAREN .)
-    RPAREN          reduce using rule 5 (factor -> LPAREN expression RPAREN .)
+    SYMBOL          reduce using rule 6 (species -> SYMBOL COUNT .)
+    $end            reduce using rule 6 (species -> SYMBOL COUNT .)
 
