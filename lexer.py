@@ -43,8 +43,11 @@ t_ignore = ' \t'
 
 # Rule for illegal characters and errors
 def t_error(t):
-    print("Illegal character '%s'" % t.value[0])
-    t.lexer.skip(1)
+    if __name__ == "__main__":
+        print("Illegal character '%s'" % t.value[0])
+        t.lexer.skip(1)
+    else:
+        print("Error in Input")
 
 
 def map(data):

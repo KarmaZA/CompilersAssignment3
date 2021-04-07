@@ -10,7 +10,7 @@ bFlag = True
 
 def p_expression_plus(p):
     'expression : expression PLUS term'
-    p[0] = p[1] + p[3]
+    p[0] = str(p[1]) + str(p[3])
 
 
 def p_expression_term(p):
@@ -25,7 +25,7 @@ def p_term_factor(p):
 
 def p_expression_equals(p):
     'expression : expression EQUALS term'
-    p[0] = p[1] + p[3]
+    p[0] = str(p[1]) + str(p[3])
 
 
 def p_factor_expr(p):  # error is here
@@ -60,6 +60,6 @@ if __name__ == "__main__":
 
     result = parser.parse(str(data))
     if bFlag:
-        print(result)
+        print("accepted")
     else:
         print("Error in input")
