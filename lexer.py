@@ -45,6 +45,7 @@ t_ignore = ' \t'
 
 # Rule for illegal characters and errors
 def t_error(t):
+
     if __name__ == "__main__":
         print("Illegal character '%s'" % t.value[0])
     else:
@@ -69,7 +70,6 @@ def map(data):
 
 # build the lexer
 lexer = lex.lex()
-
 
 if __name__ == "__main__":
     check = input()
