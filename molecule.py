@@ -38,9 +38,10 @@ def t_newline(t):
 
 
 def t_error(t):
-    print("Illegal character '%s'" % t.value[0])
+    #print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
-
+    global bFlag
+    bFlag = False
 
 lexer = lex.lex()
 
@@ -55,6 +56,7 @@ def p_expression_count(p):
     count += p[2]
 
 
+
 def p_expression_symbol(p):
     'expression : SYMBOL expression'
     global count
@@ -67,22 +69,22 @@ def p_expression_symbcount(p):
 
 
 def p_error(p):
-    print("error in formula")
+    print("Error in formula")
     global bFlag
     bFlag = False
 
 
 parser = yacc.yacc(debug=False)
 
-
+# has to be in a method or global count throws errors
 def run():
     global count
     global bFlag
     dataOut = []
-    dataIn = ""
+    dataIn = input()
     while dataIn != "#":
-        dataIn = input()
         dataOut.append((dataIn))
+        dataIn = input()
 
     for inputs in dataOut:
         count = 0
@@ -92,7 +94,7 @@ def run():
             print(count)
         else:
             print("Error in formula")
-        bFlag = False
+        bFlag = True
 
 
 if __name__ == "__main__":
