@@ -80,7 +80,7 @@ def p_expression_symbcount(p):
 
 
 def p_error(p):
-    print("Error in formula")
+    #print("Error in formula")
     global bFlag
     bFlag = False
 
@@ -97,6 +97,7 @@ def run():
     while dataIn != "#":
         dataOut.append(dataIn)
         dataIn = input()
+   #print(dataOut)
 
     for inputs in dataOut:
         count = 0
