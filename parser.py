@@ -11,8 +11,9 @@ names = {}
 
 
 def p_expression_plus(p):
-    'expression : expression PLUS expression'
-    p[0] = p[1] + p[3]
+    'expression : expression PLUS term'
+    p[0] = (p[1] + p[3])
+    print("here")
 
 
 def p_expression_paren(p):
@@ -23,6 +24,7 @@ def p_expression_paren(p):
 def p_expression_equals(p):
     'expression : NAME EQUALS expression'
     names[p[1]] = p[3]
+    print(names)
     p[1] = p[3]
 
 
@@ -33,6 +35,7 @@ def p_expression_number(p):
 
 def p_expression_name(p):
     'expression : NAME'
+    p[0] = p[1]
     try:
         p[0] = names[p[1]]
     except LookupError:
@@ -43,11 +46,12 @@ def p_expression_name(p):
 
 def p_error(p):
     # print("Error in input")
+    #print(str(p))
     global bFlag
     bFlag = False
 
 
-parser = yacc.yacc(debug=False)
+parser = yacc.yacc()#debug=False)
 if __name__ == "__main__":
     check = input()
     data = ""
@@ -55,7 +59,7 @@ if __name__ == "__main__":
         data += check + "\n"
         check = input()
 
-    result = parser.parse(str(data))
+    result = parser.parse(str(check))
     if bFlag and lexer.bf:
         print("Accepted")
     else:
