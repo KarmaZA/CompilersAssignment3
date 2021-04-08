@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'EQUALS LPAREN NAME NUMBER PLUS RPARENexpression : expression PLUS expressionexpression : LPAREN expression RPARENexpression : NAME EQUALS expressionexpression : NUMBERexpression : NAME'
+_lr_signature = 'EQUALS LPAREN NAME NUMBER PLUS RPARENexpression : NAME EQUALS expressionexpression : expression PLUS expressionexpression : LPAREN expression RPARENexpression : NUMBERexpression : NAME'
     
-_lr_action_items = {'LPAREN':([0,2,5,7,],[2,2,2,2,]),'NAME':([0,2,5,7,],[3,3,3,3,]),'NUMBER':([0,2,5,7,],[4,4,4,4,]),'$end':([1,3,4,8,9,10,],[0,-5,-4,-1,-2,-3,]),'PLUS':([1,3,4,6,8,9,10,],[5,-5,-4,5,5,-2,5,]),'EQUALS':([3,],[7,]),'RPAREN':([3,4,6,8,9,10,],[-5,-4,9,-1,-2,-3,]),}
+_lr_action_items = {'NAME':([0,3,5,6,],[2,2,2,2,]),'LPAREN':([0,3,5,6,],[3,3,3,3,]),'NUMBER':([0,3,5,6,],[4,4,4,4,]),'$end':([1,2,4,8,9,10,],[0,-5,-4,-2,-1,-3,]),'PLUS':([1,2,4,7,8,9,10,],[5,-5,-4,5,5,5,-3,]),'EQUALS':([2,],[6,]),'RPAREN':([2,4,7,8,9,10,],[-5,-4,10,-2,-1,-3,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'expression':([0,2,5,7,],[1,6,8,10,]),}
+_lr_goto_items = {'expression':([0,3,5,6,],[1,7,8,9,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,9 +27,9 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> expression","S'",1,None,None,None),
-  ('expression -> expression PLUS expression','expression',3,'p_expression_plus','parser.py',14),
-  ('expression -> LPAREN expression RPAREN','expression',3,'p_expression_paren','parser.py',19),
-  ('expression -> NAME EQUALS expression','expression',3,'p_expression_equals','parser.py',24),
-  ('expression -> NUMBER','expression',1,'p_expression_number','parser.py',30),
-  ('expression -> NAME','expression',1,'p_expression_name','parser.py',35),
+  ('expression -> NAME EQUALS expression','expression',3,'p_expression_equals','parser.py',14),
+  ('expression -> expression PLUS expression','expression',3,'p_expression_plus','parser.py',26),
+  ('expression -> LPAREN expression RPAREN','expression',3,'p_expression_paren','parser.py',31),
+  ('expression -> NUMBER','expression',1,'p_expression_number','parser.py',36),
+  ('expression -> NAME','expression',1,'p_expression_name','parser.py',41),
 ]
